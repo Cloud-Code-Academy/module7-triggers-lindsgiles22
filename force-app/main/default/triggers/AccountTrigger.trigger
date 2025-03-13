@@ -27,6 +27,21 @@ trigger AccountTrigger on Account (before insert, after insert) {
 
     // After insert logic
     if (Trigger.isAfter && Trigger.isInsert) {
-        
+        List<Contact> contactsToInsert = new List<Contact>();
+
+        // Loop through accounts insterted
+        for(Account acc : trigger.New) {
+            Contact newContact = new Contact(
+                LastName = 'DefaultContact',
+                Email = 'default@email.com',
+                AccountId = acc.Id
+            )
+            // Add the contact to the list for insertion
+            contactsToInsert.add(newContact);
+        }
+        // Insert all contacts from list
+        if (!contactToInsert.isEmpty()) {
+            insert contactsToInsert;
+        }
     }
 }
