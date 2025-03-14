@@ -35,7 +35,7 @@ trigger AccountTrigger on Account (before insert, after insert) {
                 LastName = 'DefaultContact',
                 Email = 'default@email.com',
                 AccountId = acc.Id
-            )
+            );
             // Add the contact to the list for insertion
             contactsToInsert.add(newContact);
         }

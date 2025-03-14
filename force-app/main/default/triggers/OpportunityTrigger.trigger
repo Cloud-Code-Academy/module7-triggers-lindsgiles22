@@ -30,7 +30,7 @@ trigger OpportunityTrigger on Opportunity (before update, before delete) {
                 Account relatedAccount = [SELECT Industry FROM Account WHERE Id = :opp.AccountId LIMIT 1];
 
                 if (relatedAccount.Industry == 'Banking') {
-                    opp.addError('Cannot delete closed opportunity for a banking account that is won')
+                    opp.addError('Cannot delete closed opportunity for a banking account that is won');
                 }
             }
         }
