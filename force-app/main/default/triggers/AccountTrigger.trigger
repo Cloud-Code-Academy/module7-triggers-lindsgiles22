@@ -40,7 +40,7 @@ trigger AccountTrigger on Account (before insert, after insert) {
             contactsToInsert.add(newContact);
         }
         // Insert all contacts from list
-        if (!contactToInsert.isEmpty()) {
+        if (!contactsToInsert.isEmpty()) {
             insert contactsToInsert;
         }
     }
