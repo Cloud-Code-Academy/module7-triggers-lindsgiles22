@@ -24,12 +24,22 @@ trigger OpportunityTrigger on Opportunity (before update, before delete) {
 }
     // Before delete logic
     if(Trigger.isDelete) {
+        // Collect Account Ids from Opportunities being deleted
+        Set<Id> accountIds = new Set<Id>();
         for (Opportunity opp : Trigger.old) {
-            if (opp.StageName == 'Closed Won') {
-                // Query related Account's Inducstry
-                Account relatedAccount = [SELECT Industry FROM Account WHERE Id = :opp.AccountId LIMIT 1];
+            if (opp.StageName == 'Closed Won' && opp.AccountId != null) {
+                accountIds.add(opp.AccountId);
+            }
+        }
+        // Query all relevant Accounts at once
+        Map<Id, Account> accountMap = new Map<Id, Account>(
+            [SELECT Id, Industry FROM Account WHERE Id = IN :accountIds]);
 
-                if (relatedAccount.Industry == 'Banking') {
+        // Check conditions and throw error if necessary
+        for (Opportunity opp : Trigger.old) {
+            if (opp.StageName == 'Closed Won' && opp.AccountId != null) {
+                Account relatedAccount = accountMap.get(opp.AccountId;)
+                if (relatedAccount != null && relatedAccount.Industry == 'Banking') {
                     opp.addError('Cannot delete closed opportunity for a banking account that is won');
                 }
             }
