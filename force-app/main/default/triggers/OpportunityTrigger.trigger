@@ -33,12 +33,12 @@ trigger OpportunityTrigger on Opportunity (before update, before delete) {
         }
         // Query all relevant Accounts at once
         Map<Id, Account> accountMap = new Map<Id, Account>(
-            [SELECT Id, Industry FROM Account WHERE Id = IN :accountIds]);
+            [SELECT Id, Industry FROM Account WHERE Id IN :accountIds]);
 
         // Check conditions and throw error if necessary
         for (Opportunity opp : Trigger.old) {
             if (opp.StageName == 'Closed Won' && opp.AccountId != null) {
-                Account relatedAccount = accountMap.get(opp.AccountId;)
+                Account relatedAccount = accountMap.get(opp.AccountId);
                 if (relatedAccount != null && relatedAccount.Industry == 'Banking') {
                     opp.addError('Cannot delete closed opportunity for a banking account that is won');
                 }
