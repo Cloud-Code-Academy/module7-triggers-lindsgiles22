@@ -4,7 +4,7 @@ trigger OpportunityTrigger on Opportunity (before update, before delete) {
         // Collect all Account IDs to query Contacts in bulk
         Set<Id> accountIds = new Set<Id>();
 
-        for(Opportunity opp : trigger.New) {
+        for (Opportunity opp : trigger.New) {
             if (opp.amount < 5000) {
                 opp.addError('Opportunity amount must be greater than 5000');
             }
