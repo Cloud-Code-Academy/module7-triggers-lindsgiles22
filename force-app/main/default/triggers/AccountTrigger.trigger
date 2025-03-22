@@ -1,8 +1,8 @@
 trigger AccountTrigger on Account (before insert, after insert) {
     if (Trigger.isBefore && Trigger.isInsert) {
         for (Account acc : Trigger.new) {
-            if (String.isBlank(acc.type)){
-            acc.type = 'Prospect';
+            if (String.isBlank(acc.type)) {
+                acc.type = 'Prospect';
             }
             // Check if shipping fields are not blank before copying
             if (!String.isBlank(acc.ShippingStreet)) {
