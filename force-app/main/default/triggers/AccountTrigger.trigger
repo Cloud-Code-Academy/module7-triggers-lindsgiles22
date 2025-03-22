@@ -32,7 +32,7 @@ trigger AccountTrigger on Account (before insert, after insert) {
         List<Contact> contactsToInsert = new List<Contact>();
 
         // Loop through accounts insterted
-        for(Account acc : trigger.New) {
+        for (Account acc : trigger.New) {
             Contact newContact = new Contact(
                 LastName = 'DefaultContact',
                 Email = 'default@email.com',
