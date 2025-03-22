@@ -5,7 +5,7 @@ trigger OpportunityTrigger on Opportunity (before update, before delete) {
         Set<Id> accountIds = new Set<Id>();
 
         for(Opportunity opp : trigger.New) {
-            if(opp.amount < 5000) {
+            if (opp.amount < 5000) {
                 opp.addError('Opportunity amount must be greater than 5000');
             }
             accountIds.add(opp.AccountId);
